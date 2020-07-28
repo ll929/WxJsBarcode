@@ -204,22 +204,6 @@ function render(renderProperties, encodings, options){
 	}
 }
 
-// Export to browser
-if(typeof window !== "undefined"){
-	window.JsBarcode = JsBarcode;
-}
-
-// Export to jQuery
-/*global jQuery */
-if (typeof jQuery !== 'undefined') {
-	jQuery.fn.JsBarcode = function(content, options){
-		var elementArray = [];
-		jQuery(this).each(function() {
-			elementArray.push(this);
-		});
-		return JsBarcode(elementArray, content, options);
-	};
-}
 
 // Export to commonJS
-module.exports = JsBarcode;
+export default JsBarcode;

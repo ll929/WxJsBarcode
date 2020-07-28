@@ -48,20 +48,23 @@ Examples for browsers:
 
 #### First create a canvas (or image)
 ````html
-<svg id="barcode"></svg>
-<!-- or -->
-<canvas id="barcode"></canvas>
-<!-- or -->
-<img id="barcode"/>
+<canvas type="2d" id="barcode"></canvas>
 ````
 
 
 
 #### Simple example:
 ````javascript
-JsBarcode("#barcode", "Hi!");
-// or with jQuery
-$("#barcode").JsBarcode("Hi!");
+wx.createSelectorQuery()
+        .in(this)
+        .select('#barcode')
+        .fields({
+          node: true,
+          size: true
+        }).exec((res) => {
+          const canvas = res[0].node
+          jsbarcode(res[0].node,"Hi!")
+        })
 ````
 
 ##### Result:
@@ -70,138 +73,36 @@ $("#barcode").JsBarcode("Hi!");
 
 #### Example with options:
 ````javascript
-JsBarcode("#barcode", "1234", {
-  format: "pharmacode",
-  lineColor: "#0aa",
-  width:4,
-  height:40,
-  displayValue: false
-});
+wx.createSelectorQuery()
+        .in(this)
+        .select('#barcode')
+        .fields({
+          node: true,
+          size: true
+        }).exec((res) => {
+          const canvas = res[0].node
+          jsbarcode(res[0].node,"1234",{
+            format: "pharmacode",
+            lineColor: "#0aa",
+            width:4,
+            height:40,
+            displayValue: false
+          })
+        })
 ````
 ##### Result:
 ![Result](https://s3-eu-west-1.amazonaws.com/js-barcode/barcodes/advanced.svg)
 
 
-#### More advanced use case:
-````javascript
-JsBarcode("#barcode")
-  .options({font: "OCR-B"}) // Will affect all barcodes
-  .EAN13("1234567890128", {fontSize: 18, textMargin: 0})
-  .blank(20) // Create space between the barcodes
-  .EAN5("12345", {height: 85, textPosition: "top", fontSize: 16, marginTop: 15})
-  .render();
-````
-##### Result:
-![Result](https://s3-eu-west-1.amazonaws.com/js-barcode/barcodes/simple.svg)
-
-
-
-#### Or define the value and options in the HTML element:
-Use any `jsbarcode-*` or `data-*` as attributes where `*` is any option.
-````html
-<svg class="barcode"
-  jsbarcode-format="upc"
-  jsbarcode-value="123456789012"
-  jsbarcode-textmargin="0"
-  jsbarcode-fontoptions="bold">
-</svg>
-````
-
-And then initialize it with:
-````javascript
-JsBarcode(".barcode").init();
-````
-
-##### Result:
-![Result](https://s3-eu-west-1.amazonaws.com/js-barcode/barcodes/init.svg)
-
-
-
-#### Retrieve the barcode values so you can render it any way you'd like
-Pass in an object which will be filled with data.
-```javascript
-const data = {};
-JsBarcode(data, 'text', {...options});
-```
-data will be filled with a ``` encodings ``` property which has all the needed values.
-See wiki for an example of what data looks like.
-
-
-Setup for browsers:
-----
-### Step 1:
-Download or get the CDN link to the script:
-
-| Name | Supported barcodes | Size (gzip) | CDN / Download |
-|------|--------------------|:-----------:|---------------:|
-|  *All*  |  *All the barcodes!*  |  *10 kB*  |  *[JsBarcode.all.min.js][1]*  |
-|  CODE128  |  CODE128 (auto and force mode)  |  6.1 kB  |  [JsBarcode.code128.min.js][2]  |
-|  CODE39  |  CODE39  |  5 kB  |  [JsBarcode.code39.min.js][3]  |
-|  EAN / UPC  |  EAN-13, EAN-8, EAN-5, EAN-2, UPC (A)  |  6.5 kB  |  [JsBarcode.ean-upc.min.js][4]  |
-|  ITF  |  ITF, ITF-14  |  4.9 kB  |  [JsBarcode.itf.min.js][5]  |
-|  MSI  |  MSI, MSI10, MSI11, MSI1010, MSI1110  |  4.9 kB  |  [JsBarcode.msi.min.js][6]  |
-|  Pharmacode  |  Pharmacode  |  4.6 kB  |  [JsBarcode.pharmacode.min.js][7]  |
-|  Codabar  |  Codabar  |  4.8 kB  |  [JsBarcode.codabar.min.js][8]  |
-
-
-### Step 2:
-Include the script in your code:
-
-
-````html
-<script src="JsBarcode.all.min.js"></script>
-````
-
-### Step 3:
-You are done! Go generate some barcodes :smile:
-
 Bower and npm:
 ----
 You can also use [Bower](http://bower.io) or [npm](https://www.npmjs.com) to install and manage the library.
 ````bash
-bower install jsbarcode --save
+bower install wxjsbarcode --save
 ````
 ````bash
-npm install jsbarcode --save
+npm install wxjsbarcode --save
 ````
-
-Node.js:
-----
-
-#### With canvas:
-```` javascript
-var JsBarcode = require('jsbarcode');
-
-// Canvas v1
-var Canvas = require("canvas");
-// Canvas v2
-var { createCanvas } = require("canvas");
-
-// Canvas v1
-var canvas = new Canvas();
-// Canvas v2
-var canvas = createCanvas();
-
-JsBarcode(canvas, "Hello");
-
-// Do what you want with the canvas
-// See https://github.com/Automattic/node-canvas for more information
-````
-
-#### With svg:
-```` javascript
-const { DOMImplementation, XMLSerializer } = require('xmldom');
-const xmlSerializer = new XMLSerializer();
-const document = new DOMImplementation().createDocument('http://www.w3.org/1999/xhtml', 'html', null);
-const svgNode = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-
-JsBarcode(svgNode, 'test', {
-    xmlDocument: document,
-});
-
-const svgText = xmlSerializer.serializeToString(svgNode);
-````
-
 
 Options:
 ----
