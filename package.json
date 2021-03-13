@@ -62,7 +62,7 @@
     "run-sequence": "^1.1.5",
     "webpack": "^2.5.1",
     "webpack-stream": "^3.1.0",
-    "xmldom": "^0.1.27"
+    "xmldom": "^0.5.0"
   },
   "typings": "./jsbarcode.d.ts",
   "config": {
