@@ -44,7 +44,7 @@
     "blanket": "^1.2.3",
     "canvas": "^2.6.1",
     "coveralls": "^3.0.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-babel": "^6.1.2",
     "gulp-bump": "^2.1.0",
     "gulp-clean": "^0.3.2",
